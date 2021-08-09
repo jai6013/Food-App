@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Crunch</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+<div id="navbar" style="width: 30%;"></div>
+<div id="data" style="float: right; width: 70%;margin-top: 20px;"></div>
+  </body> 
+</html>
+
+
+<script type="module">
+  const parent = document.getElementById("data")
+
+    import myNavbar from "./components/navbar.js"
+    let navbar = document.getElementById("navbar")
+    navbar.innerHTML = myNavbar()
+    import {getData, appendData} from "./scripts/showData.js"
+    let tempDiv = document.createElement("div")
+    tempDiv.innerHTML = "Latest result"
+    tempDiv.style.fontSize = "35px"
+    tempDiv.style.fontWeight = 700
+    parent.append(tempDiv)
+    let response =  getData(`https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=e59bde5cb1c045c8a682801af0ea3dad`)
+    response.then((data) => {
+      appendData(data, parent)
+    })
+    
+    var newses = document.getElementById("sub")  
+    newses.addEventListener("click",function(){
+      parent.innerHTML = null
+      var news = document.getElementById("search").value
+      tempDiv.innerHTML = `Results to your search...........`
+      tempDiv.style.fontSize = "35px"
+      tempDiv.style.fontWeight = 700
+      parent.append(tempDiv)
+      let response =  getData(`https://newsapi.org/v2/everything?q=${news}&from=2021-07-09&sortBy=publishedAt&apiKey=e59bde5cb1c045c8a682801af0ea3dad`)
+      response.then((data) => {
+        appendData(data, parent)
+      })
+    })
+</script>

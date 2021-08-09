@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Crunch latest stories</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+<div id="navbar" style="width: 30%;"></div>
+<div id="data" style="float: right; width: 70%;margin-top: 20px;"></div>
+  </body> 
+</html>
+
+
+<script type="module">
+    const parent = document.getElementById("data")
+    
+import myNavbar from "./components/navbar.js"
+let navbar = document.getElementById("navbar")
+navbar.innerHTML = myNavbar()
+import {getData, appendData} from "./scripts/showData.js"
+((run) => {
+    parent.innerHTML = null
+      let response =  getData(`https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=e59bde5cb1c045c8a682801af0ea3dad`)
+      response.then((data) => {
+        appendData(data, parent)
+    })
+})
+
+let imageDiv = document.getElementById("imageDiv")
+imageDiv.addEventListener("click" , () => {
+    window.location.href = "./home_page.html"
+})
+</script>
+<script src="showData.js"></script>
